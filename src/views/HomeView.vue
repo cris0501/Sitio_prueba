@@ -1,28 +1,28 @@
 <template>
   <main class="flex flex-col lg:flex-row justify-center items-center space-x-4 h-screen bg px-10">
-    <div class="flex flex-col text-white w-2/3 lg:w-1/2 pl-5">
+    <div class="flex flex-col text-white w-full md:w-2/3 lg:w-1/2 pl-5">
       <p class="font-bold text-6xl"> {{ t('message.home.title1') }} </p>
       <p class="font-bold text-6xl"> {{ t('message.home.title2') }} </p>
-      <p class="w-2/3 text-justify mt-5">
+      <p class="w-full md:w-2/3 text-justify mt-5">
         {{ t('message.home.about') }}
       </p>
     </div>
-    <div class="flex justify-center w-1/3 lg:w-1/3">
-      <img src="@/assets/images/rocket.svg">
+    <div class="flex justify-center w-2/3 lg:w-1/3">
+      <img src="@/assets/images/rocket.svg" class="mt-16 lg:mt-0">
     </div>
   </main>
 
   <div class="flex flex-col items-center bg-gray-600 px-10 py-16">
-    <p class="text-white font-bold text-3xl mb-8"> {{ t('message.home.search') }} </p>
+    <p class="text-white font-bold text-3xl mb-8 text-center"> {{ t('message.home.search') }} </p>
 
-    <div class="flex w-full mx-auto" :class="{'space-x-5':pokemon!=null}">
-      <div class="flex flex-col items-center w-1/2" :class="{ 'mx-auto':pokemon==null }">
+    <div class="flex flex-col lg:flex-row justify-center items-center w-full mx-auto" :class="{'lg:space-x-5':pokemon!=null}">
+      <div class="flex flex-col items-center w-full lg:w-1/2" :class="{ 'mx-auto':pokemon==null }">
         <vinput placeholder="Pokemon" label="Pokemon" @change="changeInput"/>
-        <div class="w-1/3 my-4">
+        <div class="w-2/3 md:w-1/3 my-4">
           <btn text="Buscar" icon="ok" @click="searchPokemon" />
         </div>
       </div>
-      <div v-if="pokemon!=null" class="flex flex-col items-center w-1/2 px-4 rounded-lg border-2 border-white">
+      <div v-if="pokemon!=null" class="flex flex-col items-center w-full lg:w-1/2 px-4 rounded-lg border-2 border-white">
         <div class="p-2">
           <p class="text-white text-xl font-bold"> {{ pokemon.name }} </p>
           <img :src="pokemon.image">
