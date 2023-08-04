@@ -19,8 +19,9 @@
       <div class="flex flex-col items-center w-full lg:w-1/2" :class="{ 'mx-auto':pokemon==null }">
         <vinput placeholder="Pokemon" label="Pokemon" @change="changeInput"/>
         <div class="w-2/3 md:w-1/3 my-4">
-          <btn :text="t('message.search')" icon="ok" @click="searchPokemon" />
+          <btn :text="t('message.search')" :icon="icon" @click="searchPokemon" />
         </div>
+        <p class="text-sm text-center text-white"> La conexion se hace con la API: <a href="https://pokeapi.co" target="_blank">https://pokeapi.co/</a></p>
       </div>
       <div v-if="pokemon!=null" class="flex flex-col items-center w-full lg:w-1/2 px-4 rounded-lg border-2 border-white">
         <div class="p-2">
@@ -57,12 +58,17 @@
   const { t } = useI18n()
   const search = ref(null)
   const pokemon = ref(null)
+  const loading = ref(false)
+  const icon = ref('ok')
 
   function changeInput (event){
     search.value = event
   }
 
   async function searchPokemon (){
+    if (loading.value) return 0
+    loading.value = true
+    icon.value = 'cross'
     if (search.value!='' && search.value!=null){
       const { status, data } = await api({
         url: `https://pokeapi.co/api/v2/pokemon/${search.value}`,
@@ -95,6 +101,8 @@
         state: 'alert',
       })
     }
+    loading.value = false
+    icon.value = 'ok'
   }
 </script>
 
