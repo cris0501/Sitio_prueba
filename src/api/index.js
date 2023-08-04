@@ -5,13 +5,13 @@ export default function ({url, method='POST', body=null}){
             'Content-Type': 'application/json'
         }
     }
-    if (localStorage.user) options.headers.Authorization = 'Bearer '+JSON.parse(localStorage.getItem('user')).token;
-    if (body) options.body = JSON.stringify(body);
+    if (localStorage.user) options.headers.Authorization = 'Bearer '+JSON.parse(localStorage.getItem('user')).token
+    if (body) options.body = JSON.stringify(body)
     
     const resp = fetch (`${url}`, options)
     //const resp = fetch (`http://localhost:8000/${url}`, options)
         .then(resp => {
-            if (resp.status == 200) return resp.json();
+            if (resp.status == 200) return resp.json()
             throw new Error('Error');
         })
         .then(resp => {
@@ -19,11 +19,11 @@ export default function ({url, method='POST', body=null}){
               status: 200,
               message: 'OK',
               data: resp
-            };
+            }
         })
         .catch((e) => {
-            return {state:'Error', message:'Unknown', data:e}
-        });
-    return resp;
+            return {status: 400, message:'Error', data:e}
+        })
+    return resp
 }
 

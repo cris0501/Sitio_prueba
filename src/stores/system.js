@@ -21,7 +21,7 @@ export const useSystemStore = defineStore('system', () => {
   }
     
   function changeLenguage(value, payload){
-    lenguage.value = (value=='sp' || value=='en') ? value : 'sp';
+    lenguage.value = (value=='es' || value=='en') ? value : 'sp';
     payload.locale = lenguage.value
   }
 

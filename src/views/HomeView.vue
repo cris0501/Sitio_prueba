@@ -1,38 +1,91 @@
-<script setup>
-</script>
-
 <template>
-  <main class="flex justify-center items-center space-x-4 h-screen bg px-10">
+  <main class="flex flex-col lg:flex-row justify-center items-center space-x-4 h-screen bg px-10">
     <div class="flex flex-col text-white w-2/3 lg:w-1/2 pl-5">
-      <p class="font-bold text-6xl"> Prueba </p>
-      <p class="font-bold text-6xl"> Practica </p>
+      <p class="font-bold text-6xl"> {{ t('message.home.title1') }} </p>
+      <p class="font-bold text-6xl"> {{ t('message.home.title2') }} </p>
       <p class="w-2/3 text-justify mt-5">
-        La presente página web se crea como una prueba practica para la vacante de desarrollador web, particularmente para el apartado de frontend.
+        {{ t('message.home.about') }}
       </p>
     </div>
     <div class="flex justify-center w-1/3 lg:w-1/3">
       <img src="@/assets/images/rocket.svg">
     </div>
   </main>
-  <div>
-    
+
+  <div class="flex flex-col items-center bg-gray-600 px-10 py-16">
+    <p class="text-white font-bold text-3xl mb-8"> {{ t('message.home.search') }} </p>
+
+    <div class="flex w-full mx-auto" :class="{'space-x-5':pokemon!=null}">
+      <div class="flex flex-col items-center w-1/2" :class="{ 'mx-auto':pokemon==null }">
+        <vinput placeholder="Pokemon" label="Pokemon" @change="changeInput"/>
+        <div class="w-1/3 my-4">
+          <btn text="Buscar" icon="ok" @click="searchPokemon" />
+        </div>
+      </div>
+      <div v-if="pokemon!=null" class="flex flex-col items-center w-1/2 px-4 rounded-lg border-2 border-white">
+        <div class="p-2">
+          <p class="text-white text-xl font-bold"> {{ pokemon.name }} </p>
+          <img :src="pokemon.image">
+          <div class="flex space-x-3 my-2">
+            <div class="bg-yellow-600 rounded-lg px-3 py-2" v-for="(item,index) of pokemon.types" :key="index+'.'+item.name">
+              <p> {{ item.type.name }} </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
   import api from '@/api'
   import { onMounted, ref } from 'vue'
+  import { useI18n } from 'vue-i18n'
+  import vinput from '@/components/input.vue'
+  import btn from '@/components/btn.vue'
+  import { useSystemStore } from '@/stores/system.js'
 
-  onMounted( async () => {
-    const resp = await api({
-      url: 'https://pokeapi.co/api/v2/pokemon/5',
-      method: 'GET'
-    })
-    console.log(resp)
-  })
+  const sysStore = useSystemStore()
+  const { t } = useI18n()
+  const search = ref(null)
+  const pokemon = ref(null)
+
+  function changeInput (event){
+    search.value = event
+  }
+
+  async function searchPokemon (){
+    if (search.value!='' && search.value!=null){
+      const { status, data } = await api({
+        url: `https://pokeapi.co/api/v2/pokemon/${search.value}`,
+        method: 'GET'
+      })
+      if (status == 200){
+        pokemon.value = {
+          name: data.name,
+          image: data.sprites.front_default,
+          types: data.types
+        }
+        sysStore.notification({
+          title: 'Ok',
+          message: t('message.success.ok'),
+          state: 'success',
+        })
+      } else {
+        pokemon.value = null
+        sysStore.notification({
+          title: 'Error',
+          message: t('message.errors.notFound'),
+          state: 'error',
+        })
+      }
+    } else {
+      pokemon.value = null
+    }
+  }
 </script>
 
-<style scoped>
+<style>
   .bg {
     background: url('@/assets/images/bg.webp');
   }
