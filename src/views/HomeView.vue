@@ -19,7 +19,7 @@
       <div class="flex flex-col items-center w-full lg:w-1/2" :class="{ 'mx-auto':pokemon==null }">
         <vinput placeholder="Pokemon" label="Pokemon" @change="changeInput"/>
         <div class="w-2/3 md:w-1/3 my-4">
-          <btn text="Buscar" icon="ok" @click="searchPokemon" />
+          <btn :text="t('message.search')" icon="ok" @click="searchPokemon" />
         </div>
       </div>
       <div v-if="pokemon!=null" class="flex flex-col items-center w-full lg:w-1/2 px-4 rounded-lg border-2 border-white">
@@ -34,6 +34,14 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="flex flex-col bg px-10 py-10 text-right">
+    <p class="text-lg font-bold text-white">
+      C. Cristian Ramirez G.
+    </p>
+    <p class="text-sm text-white">
+      Aspirante a desarrollador
+    </p>
   </div>
 </template>
 
@@ -81,6 +89,11 @@
       }
     } else {
       pokemon.value = null
+      sysStore.notification({
+        title: t('message.alert'),
+        message: t('message.alerts.fillData'),
+        state: 'alert',
+      })
     }
   }
 </script>
