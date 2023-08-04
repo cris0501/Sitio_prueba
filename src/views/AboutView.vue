@@ -13,7 +13,7 @@
           {{ t('message.about.about3') }}
         </p>
       </div>
-      <img src="@/assets/images/tree.png" style="height:100%;width:auto;">
+      <img src="@/assets/images/tree2.png" style="height:100%;width:auto;">
     </div>
     <p class="text-white text-2xl text-center font-bold">
       {{ t('message.about.spa') }}
