@@ -4,7 +4,7 @@
     <p class="text-justify text-white text-xl font-bold">
       {{ t('message.about.about1') }}
     </p>
-    <div class="flex items-center lg:space-x-5">
+    <div class="flex flex-col-reverse lg:flex-row items-center lg:space-x-5">
       <div class="flex flex-col space-y-5 text-justify">
         <p class="text-white text-xl font-bold">
           {{ t('message.about.about2') }}
@@ -13,7 +13,7 @@
           {{ t('message.about.about3') }}
         </p>
       </div>
-      <img src="@/assets/images/tree2.png" style="height:100%;width:auto;">
+      <img src="@/assets/images/tree2.png" class="mt-2 mb-6" style="height:100%;width:auto;">
     </div>
     <p class="text-white text-2xl text-center font-bold">
       {{ t('message.about.spa') }}
