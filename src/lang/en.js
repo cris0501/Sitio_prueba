@@ -19,5 +19,6 @@ export default {
       home: 'Home',
       about: 'About'
     },
+    search: 'Search',
   }
 }
