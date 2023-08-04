@@ -35,6 +35,14 @@
       </div>
     </div>
   </div>
+  <div class="flex flex-col bg px-10 py-10 text-right">
+    <p class="text-lg font-bold text-white">
+      C. Cristian Ramirez G.
+    </p>
+    <p class="text-sm text-white">
+      Aspirante a desarrollador
+    </p>
+  </div>
 </template>
 
 <script setup>
@@ -81,6 +89,11 @@
       }
     } else {
       pokemon.value = null
+      sysStore.notification({
+        title: t('message.alert'),
+        message: t('message.alerts.fillData'),
+        state: 'alert',
+      })
     }
   }
 </script>
